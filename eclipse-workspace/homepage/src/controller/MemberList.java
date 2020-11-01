@@ -49,9 +49,6 @@ public class MemberList extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		MemberListService memberListsvc = new MemberListService();
 		ArrayList<MemberDTO> memberList = memberListsvc.printList();
-		for(int i = 0; i < memberList.size(); i++) {
-			System.out.println(memberList.get(i).getUserName());
-		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher("MemberList.jsp");
 		request.setAttribute("memberList", memberList);
 		dispatcher.forward(request, response);

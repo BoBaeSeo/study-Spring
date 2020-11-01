@@ -57,9 +57,4 @@ public class MemberDetailController extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 }

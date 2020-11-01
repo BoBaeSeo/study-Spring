@@ -24,22 +24,16 @@
 	</tr>
 	<c:forEach var="mem" items="${memberList}">
 	<tr>
-		<td><c:out value='${mem.userId}'></c:out></td>
-		<td><c:out value='${mem.userPw}'></c:out></td>
-		<td><c:out value='${mem.userName}'></c:out></td>
-		<td><c:out value='${mem.userBirth}'></c:out></td>
-		<td><c:out value='${mem.userGender}'></c:out></td>
-		<td><c:out value='${mem.userEmail}'></c:out></td>
+		<td>${mem.userId}</td>
+		<td>${mem.userPw}</td>
+		<td>${mem.userName}</td>
+		<td>${mem.userBirth}</td>
+		<td>${mem.userGender}</td>
+		<td>${mem.userEmail}</td>
 		<td><a href="memberDetail?userId=${mem.userId}">상세조회</a></td><td><a href="memberDelete?userId=${mem.userId}">탈퇴</a></td>
 	</tr>
 	</form>
 	</c:forEach>
 </table>
 </body>
-<script>
-	var detail11 = document.getElementById("#detailInfo'${status.count}'");
-	function detail(){
-		document.getElementById("#members").remove();
-	}
-</script>
 </html>
