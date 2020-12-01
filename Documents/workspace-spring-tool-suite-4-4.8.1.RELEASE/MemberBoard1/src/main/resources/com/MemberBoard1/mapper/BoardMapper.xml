@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.MemberBoard1.mapper.BoardMapper">
+ 	<select id="boardList2" resultType="com.MemberBoard1.dto.BoardDTO">
+ 		SELECT * FROM BOARD
+ 	</select>
+ 
+ 	<resultMap type="com.MemberBoard1.dto.BoardDTO" id="board">
+ 		<result property="bno" column="BNO" />
+ 		<result property="bwriter" column="BWRITER" />
+ 		<result property="bpassword" column="BPASSWORD" />
+ 		<result property="btitle" column="BTITLE" />
+ 		<result property="bcontent" column="BCONTENT" />
+ 		<result property="bdate" column="BDATE" />
+ 		<result property="bhit" column="BHIT" />
+ 	</resultMap>
+ 	
+ </mapper>

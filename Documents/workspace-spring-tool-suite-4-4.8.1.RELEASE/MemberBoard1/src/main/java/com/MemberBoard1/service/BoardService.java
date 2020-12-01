@@ -22,6 +22,7 @@ public class BoardService {
 		
 		ArrayList<BoardDTO> boardList = boardMapper.boardList();
 		System.out.println(boardList);
+		System.out.println("boardList2::"+boardMapper.boardList2());
 		
 		mav.addObject("boardList", boardList);
 		mav.setViewName("board/boardList");

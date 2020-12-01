@@ -11,6 +11,8 @@ public interface BoardMapper {
 
 	@Select("SELECT * FROM BOARD")
 	public ArrayList<BoardDTO> boardList();
+	
+	public ArrayList<BoardDTO> boardList2();
 
 	@Update("UPDATE BOARD SET BHIT=BHIT+1 WHERE BNO=#{bno}")
 	public int hitUpdate(int bno);
