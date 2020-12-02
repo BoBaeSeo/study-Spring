@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.MemberBoard1.mapper.BoardMapper">
+ 	<select id="boardList2" resultMap="board">
+ 		SELECT * FROM BOARD
+ 	</select>
+ 	
+ 	<insert id="boardWrite" parameterType="com.MemberBoard1.dto.BoardDTO">
+ 		INSERT INTO BOARD VALUES(#{bno}, #{bwriter}, #{bpassword}, #{btitle}, #{bcontent}, SYSDATE, 0)
+ 	</insert>
+  
+ 	<select id="getBno" resultType="int">
+ 		SELECT NVL(MAX(BNO),0) FROM BOARD
+ 	</select>
+ 	
+ 	<update id="hitUpdate" parameterType="int">
+ 		UPDATE BOARD SET BHIT=BHIT+1 WHERE BNO=#{bno}
+ 	</update>
+ 	
+ 	<select id="boardView" resultMap="board">
+ 		SELECT * FROM BOARD WHERE BNO=#{bno}
+ 	</select>
+ 	
+ 	<resultMap type="com.MemberBoard1.dto.BoardDTO" id="board">
+ 		<result property="bno" column="BNO" />
+ 		<result property="bwriter" column="BWRITER" />
+ 		<result property="bpassword" column="BPASSWORD" />
+ 		<result property="btitle" column="BTITLE" />
+ 		<result property="bcontent" column="BCONTENT" />
+ 		<result property="bdate" column="BDATE" />
+ 		<result property="bhit" column="BHIT" />
+ 	</resultMap>
+ 	
+ </mapper>
