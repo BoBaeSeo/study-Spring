@@ -25,7 +25,16 @@
 
     <!-- Custom styles for this page -->
     <link href="resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+	<style type="text/css">
+		.boardView input[type="text"], .boardView textarea{
+			font-weight: bold;
+			font-size: 15px;
+		}
+		#getCwriter{
+			width: 150px;
+			height: 30px;
+		}
+	</style>
 </head>
 
 <body id="page-top">
@@ -169,12 +178,17 @@
 
                     <!-- Topbar Search -->
                     <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+                        action="searchList" method="post">
                         <div class="input-group">
+                        <select name="searchType" id="searchType">
+                        	<option value="btitle">글제목</option>
+                        	<option value="bwriter">작성자</option>
+                        </select>
                             <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
+                                aria-label="Search" aria-describedby="basic-addon2" name="searchValue">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>

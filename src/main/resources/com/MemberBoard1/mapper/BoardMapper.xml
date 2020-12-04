@@ -24,6 +24,33 @@
  		SELECT * FROM BOARD WHERE BNO=#{bno}
  	</select>
  	
+ 	<update id="boardModifyProcess" parameterType="com.MemberBoard1.dto.BoardDTO">
+ 		UPDATE BOARD SET BCONTENT = #{bcontent} WHERE BNO=#{bno}
+ 	</update>
+ 	
+ 	<select id="searchList" resultMap="board" parameterType="map">
+ 		SELECT * FROM BOARD WHERE ${searchType} LIKE '%'||UPPER(#{searchValue})||'%' 
+        OR ${searchType} LIKE '%'||LOWER(#{searchValue})||'%' ORDER BY BNO DESC
+ 	</select>
+ 	
+ 	<delete id="boardDelete" parameterType="int">
+ 		DELETE FROM BOARD WHERE BNO = #{bno}
+ 	</delete>
+ 	
+ 	<!-- search를 하는 3번째 방법 -->
+<!--  	<select id="boardSearch" resultMap="board">
+ 		SELECT * FROM BOARD 
+ 			<where>
+ 				<if test="searchType == 'bTitle'">
+ 					BTITLE LIKE '%${keyWord}%'
+ 				</if>
+ 				<if test="searchType == 'bWriter'">
+ 					BWriter LIKE '%${keyWord}%'
+ 				</if>
+ 			</where>
+ 			
+ 	</select> -->
+ 	
  	<resultMap type="com.MemberBoard1.dto.BoardDTO" id="board">
  		<result property="bno" column="BNO" />
  		<result property="bwriter" column="BWRITER" />
@@ -34,4 +61,5 @@
  		<result property="bhit" column="BHIT" />
  	</resultMap>
  	
+
  </mapper>

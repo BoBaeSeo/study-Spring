@@ -1,10 +1,13 @@
 package com.MemberBoard1.mapper;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.MemberBoard1.dto.BoardDTO;
+import com.MemberBoard1.dto.CommentsDTO;
 
 public interface BoardMapper {
 
@@ -21,5 +24,13 @@ public interface BoardMapper {
 
 	public int getBno();
 
+	public ArrayList<BoardDTO> searchList(Map<String, String> map);
+
+	public int boardModifyProcess(BoardDTO dto);
+
+	public int boardDelete(int bno);
+
+
+	/* public ArrayList<BoardDTO> boardSearch(Map<String, String> map); */
 
 }
