@@ -53,18 +53,21 @@
 
 							</form>
 							<br>
-							<c:if test="${commentList != null }">
-								<c:forEach var="list" items="${commentList }">
+							<!-- 글 목록  -->
+							<div id="commentArea">
+								<%-- <c:forEach var="list" items="${commentList }">
 								<div class="form-group">
 								<div class="card shadow mb-4">
 									<div class="card-header py-3">
-										<input type="text" class="form-control form-control-user" id="getCwriter" readonly="readonly" value="${list.cwriter }">
+										<input type="text" class="form-control form-control-user" readonly="readonly" value="${list.cwriter }">
 									</div>
 									<textarea rows="2" class="card-body form-control" readonly="readonly">${list.ccontent }</textarea>
 								</div>
 							</div>
-								</c:forEach>
-							</c:if>
+								</c:forEach> --%>
+							</div>
+							
+							
 							<div class="form-group">
 								<div class="card shadow mb-4">
 									<div class="card-header py-3">
@@ -91,6 +94,7 @@
 <!-- End of Main Content -->
 <script type="text/javascript">
 	$(document).ready(function() {
+		printCommentList();
 		$("#commentsWriteBtn").click(function() {
 			var cwriter = $("#cwriter").val();
 			var ccontent = $("#ccontent").val();
@@ -107,7 +111,9 @@
 				dataType : "json",
 				success : function(result) {
 					console.log(result);
-					
+					commentList(result);
+					$("#cwriter").val("");
+					$("#ccontent").val("");
 				},
 				error : function() {
 					alert("실패");
@@ -115,6 +121,67 @@
 			})
 		})
 	})
+	
+	function commentList(result){
+		console.log("commentList");
+		var output = '';
+
+		for(var i in result){
+			var cwriter = result[i].cwriter;
+			var ccontent = result[i].ccontent;
+			var cno = result[i].cno;
+			output += "<div class='form-group'>";
+			output += "<div class='card shadow mb-4'>";
+			output += "<div class='card-header py-3'>";
+			output += "<input type='text' class='form-control form-control-user col-sm-4 delComment' readonly='readonly' value='"+cwriter+"'> ";
+			output += "<button class='btn btn-danger' onclick='delComment("+cno+")'>삭제</button>";
+			output += "</div>";
+			output += "<textarea rows='2' class='card-body form-control' readonly='readonly'>"+ccontent+"</textarea>";
+			output += "</div>";
+			output += "</div>";
+		}
+		$("#commentArea").html(output);
+	}
+
+	function printCommentList(){
+		console.log("printCommentList");
+		$.ajax({
+			type : "post",
+			url : "commentList",
+			data : {
+					"cbno" : '${board.bno}'
+			},
+			dataType : "json",
+			success : function(result){
+				console.log(result);
+				commentList(result);
+			},
+			error : function(){
+					alert("연결실패");
+			}
+		});
+	}
+
+	function delComment(cno){
+		console.log("delComment");
+		console.log(cno);
+		$.ajax({
+			type : "post",
+			url : "commentDelete",
+			data : {
+					"cbno" : '${board.bno}',
+					"cno" : cno
+			},
+			dataType : "json",
+			success : function(result){
+				console.log(result);
+				commentList(result);
+			},
+			error : function(){
+				alert("삭제 연결실패");
+		}
+		})
+	}
 </script>
 
 

@@ -17,10 +17,24 @@ public class CommentsController {
 	private CommentsService commentService;
 	
 	@RequestMapping(value="/commentWrite")
-	public @ResponseBody ArrayList<CommentsDTO> commentsList(CommentsDTO comment){
+	public @ResponseBody ArrayList<CommentsDTO> commentWrite(CommentsDTO comment){
 		System.out.println("/commentWrite");
 		ArrayList<CommentsDTO> commentList = commentService.commentWrite(comment);
 		System.out.println(commentList);
+		return commentList;
+	}
+	
+	@RequestMapping(value="/commentList")
+	public @ResponseBody ArrayList<CommentsDTO> commentList(int cbno){
+		System.out.println("/commentList");
+		ArrayList<CommentsDTO> commentList = commentService.commentList(cbno);
+		return commentList;
+	}
+	
+	@RequestMapping(value="/commentDelete")
+	public @ResponseBody ArrayList<CommentsDTO> commentDelete(int cno, int cbno) {
+		System.out.println("/commentDelete");
+		ArrayList<CommentsDTO> commentList = commentService.commentDelete(cno, cbno);
 		return commentList;
 	}
 }

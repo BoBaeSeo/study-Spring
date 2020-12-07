@@ -12,4 +12,6 @@ public interface CommentMapper {
 
 	ArrayList<CommentsDTO> getCommentList(int cbno);
 
+	int commentDelete(int cno);
+
 }

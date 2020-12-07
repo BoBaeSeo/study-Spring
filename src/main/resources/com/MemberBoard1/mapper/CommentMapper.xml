@@ -12,9 +12,12 @@
 		INSERT INTO COMMENTS VALUES(#{cno}, #{cbno}, #{cwriter}, #{ccontent}, SYSDATE)
 	</insert>
 	<select id="getCommentList" resultMap="comment">
-		SELECT * FROM COMMENTS WHERE CBNO=#{cbno}
+		SELECT * FROM COMMENTS WHERE CBNO=#{cbno} ORDER BY CNO DESC
 	</select>
 	
+	<delete id="commentDelete" parameterType="int">
+		DELETE FROM COMMENTS WHERE CNO=#{cno}
+	</delete>
  	<resultMap type="com.MemberBoard1.dto.CommentsDTO" id="comment">
  		<result property="cno" column="CNO" />
  		<result property="cbno" column="CBNO" />

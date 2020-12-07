@@ -23,4 +23,16 @@ public class CommentsService {
 		return commentList;
 	}
 
+	public ArrayList<CommentsDTO> commentList(int cbno) {
+		ArrayList<CommentsDTO> commentList = commentMapper.getCommentList(cbno);
+		return commentList;
+	}
+
+	public ArrayList<CommentsDTO> commentDelete(int cno, int cbno) {
+		int delResult = commentMapper.commentDelete(cno);
+		System.out.println(delResult);
+		ArrayList<CommentsDTO> commentList = commentMapper.getCommentList(cbno);
+		return commentList;
+	}
+
 }
