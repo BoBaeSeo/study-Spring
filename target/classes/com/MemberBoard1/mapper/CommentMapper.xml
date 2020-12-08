@@ -22,6 +22,10 @@
 	<delete id="allCommentDelete" parameterType="int">
 		DELETE FROM COMMENTS WHERE CBNO=#{bno}
 	</delete>
+	
+	<update id="commentModify" parameterType="com.MemberBoard1.dto.CommentsDTO">
+		UPDATE COMMENTS SET CCONTENT=#{ccontent} WHERE CNO=#{cno}
+	</update>
  	<resultMap type="com.MemberBoard1.dto.CommentsDTO" id="comment">
  		<result property="cno" column="CNO" />
  		<result property="cbno" column="CBNO" />

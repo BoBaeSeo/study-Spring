@@ -34,11 +34,6 @@
 			width: 150px;
 			height: 30px;
 		}
-		.form-group .btn-danger{
-			width: 60px;
-			height: 30px;
-			font-size: 15px;
-		}
 		.delComment{
 			display: inline-block;
 		}

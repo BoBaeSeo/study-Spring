@@ -37,4 +37,12 @@ public class CommentsController {
 		ArrayList<CommentsDTO> commentList = commentService.commentDelete(cno, cbno);
 		return commentList;
 	}
+	
+	@RequestMapping(value="/commentModify")
+	public @ResponseBody ArrayList<CommentsDTO> commentModify(CommentsDTO dto){
+		System.out.println("/commentModify");
+		System.out.println(dto);
+		ArrayList<CommentsDTO> commentList = commentService.commentModify(dto);
+		return commentList;
+	}
 }

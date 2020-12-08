@@ -35,4 +35,11 @@ public class CommentsService {
 		return commentList;
 	}
 
+	public ArrayList<CommentsDTO> commentModify(CommentsDTO dto) {
+		int modiResult = commentMapper.commentModify(dto);
+		System.out.println(modiResult);
+		ArrayList<CommentsDTO> commentList = commentMapper.getCommentList(dto.getCbno());
+		return commentList;
+	}
+
 }

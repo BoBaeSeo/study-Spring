@@ -136,10 +136,10 @@
 			output += "<div class='card shadow mb-4'>";
 			output += "<div class='card-header py-3'>";
 			output += "<input type='text' class='form-control form-control-user col-sm-4 delComment' readonly='readonly' value='"+cwriter+"'> ";
-			output += "<button class='btn btn-danger' onclick='delComment("+cno+")'>삭제</button>";
-			output += ' <button class="btn btn-info btn-sm" onclick="commentModify('+cno+' , '+ "'"+ ccontent + "'"+ ')">수정</button>';
+			output += "<button class='btn btn-danger btn-sm' onclick='delComment("+cno+")'>삭제</button> ";
+			output += '<button id="'+cno+'" class="btn btn-info btn-sm" onclick="commentModify('+cno+' , '+ "'"+ ccontent + "'"+ ')">수정</button>';
 			output += "</div>";
-			output += "<textarea rows='2' class='card-body form-control' readonly='readonly'>"+ccontent+"</textarea>";
+			output += "<textarea rows='2' class='card-body form-control' readonly='readonly' name='"+ccontent+"'>"+ccontent+"</textarea>";
 			output += "</div>";
 			output += "</div>";
 		}
@@ -186,10 +186,34 @@
 		})
 	}
 
- function commentModify(cno, ccontent){
-	 console.log(cno);
-	 console.log(ccontent);
-	 }
+	function commentModify(cno, ccontent){
+		console.log(cno);
+		console.log(ccontent);
+		if($("#"+cno).html() == '수정'){
+			$("textarea[name='"+ccontent+"']").attr('readonly', false);
+			$("#"+cno).html('수정하기')
+		} else {
+			var newccontent = $("textarea[name='"+ccontent+"']").val();
+			console.log(newccontent);
+			$.ajax({
+				type : "post",
+				url : "commentModify",
+				data : {
+						"cno" : cno,
+						"ccontent" : newccontent,
+						"cbno" : '${board.bno}'
+				},
+				dataType : "json",
+				success : function(result){
+					console.log(result);
+					commentList(result);
+				},
+				error : function(){
+					alert("수정 연결실패");
+			}
+			})
+		}
+	}
 </script>
 
 
