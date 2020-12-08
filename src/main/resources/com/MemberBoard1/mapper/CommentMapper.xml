@@ -18,6 +18,10 @@
 	<delete id="commentDelete" parameterType="int">
 		DELETE FROM COMMENTS WHERE CNO=#{cno}
 	</delete>
+	
+	<delete id="allCommentDelete" parameterType="int">
+		DELETE FROM COMMENTS WHERE CBNO=#{bno}
+	</delete>
  	<resultMap type="com.MemberBoard1.dto.CommentsDTO" id="comment">
  		<result property="cno" column="CNO" />
  		<result property="cbno" column="CBNO" />

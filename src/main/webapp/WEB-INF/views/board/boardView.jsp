@@ -48,6 +48,8 @@
 								</div>
 								<button type="button" class="btn btn-success"
 									onclick="location.href='boardModify?bno=${board.bno}'">글수정</button>
+								<button type="button" class="btn btn-danger"
+									onclick="location.href='boardDelete?bno=${board.bno}'">글삭제</button>	
 								<button type="button" class="btn btn-info"
 									onclick="location.href='boardList'">글목록</button>
 
@@ -135,6 +137,7 @@
 			output += "<div class='card-header py-3'>";
 			output += "<input type='text' class='form-control form-control-user col-sm-4 delComment' readonly='readonly' value='"+cwriter+"'> ";
 			output += "<button class='btn btn-danger' onclick='delComment("+cno+")'>삭제</button>";
+			output += ' <button class="btn btn-info btn-sm" onclick="commentModify('+cno+' , '+ "'"+ ccontent + "'"+ ')">수정</button>';
 			output += "</div>";
 			output += "<textarea rows='2' class='card-body form-control' readonly='readonly'>"+ccontent+"</textarea>";
 			output += "</div>";
@@ -182,6 +185,11 @@
 		}
 		})
 	}
+
+ function commentModify(cno, ccontent){
+	 console.log(cno);
+	 console.log(ccontent);
+	 }
 </script>
 
 

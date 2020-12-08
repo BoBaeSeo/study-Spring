@@ -74,4 +74,18 @@ public class BoardController {
 		mav = boardService.boardDelete(bno, ra);
 		return mav;
 	}
+	
+	@RequestMapping(value="/boardWriteFileForm")
+	public String boardWriteFileForm() {
+		return "board/boardWriteFileForm";
+	}
+	
+	@RequestMapping(value="/boardWriteFile")
+	public ModelAndView boardWriteFile(BoardDTO dto){
+		System.out.println("/boardWriteFile");
+		System.out.println(dto);
+		mav = boardService.boardWriteFile(dto);
+		return mav;
+		
+	}
 }

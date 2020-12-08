@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -112,12 +113,22 @@ public class BoardService {
 
 	public ModelAndView boardDelete(int bno, RedirectAttributes ra) {
 		mav = new ModelAndView();
+		int cdelResult = commentMapper.allCommentDelete(bno);
 		int result = boardMapper.boardDelete(bno);
 		System.out.println("deleteResult:" + result);
 		ra.addFlashAttribute("modalBno", bno);
 		ra.addFlashAttribute("deleteCheck", "del");
 		mav.setViewName("redirect:/boardList");
 		return mav;
+	}
+
+	public ModelAndView boardWriteFile(BoardDTO dto) {
+		mav = new ModelAndView();
+		MultipartFile bfile = dto.getBfile();
+		String fileName = bfile.getOriginalFilename();
+		System.out.println("fileNaem::"+fileName);
+		
+		return null;
 	}
 	
 

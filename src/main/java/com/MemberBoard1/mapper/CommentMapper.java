@@ -14,4 +14,6 @@ public interface CommentMapper {
 
 	int commentDelete(int cno);
 
+	int allCommentDelete(int bno);
+
 }

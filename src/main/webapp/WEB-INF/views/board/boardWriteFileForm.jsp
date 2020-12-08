@@ -19,21 +19,21 @@
 					<div class="col-lg-7">
 						<div class="p-5">
 							<div class="text-center">
-								<h1 class="h4 text-gray-900 mb-4">글 상세보기 페이지</h1>
+								<h1 class="h4 text-gray-900 mb-4">새 글 등록 페이지</h1>
 							</div>
-							<form class="user boardView" action="boaardModifyProcess" method="post">
+							<form class="user" action="boardWriteFile" method="post" enctype="multipart/form-data">
 								<div class="form-group">
 									<input type="text" class="form-control form-control-user"
-										 name="btitle" readonly="readonly" value="${board.btitle}">
+										id="exampleInputEmail" name="btitle" placeholder="글 제목">
 								</div>
 								<div class="form-group row">
-									<div class="col-sm-6">
-										<input type="text" class="form-control form-control-user"
-											 name="bno" readonly="readonly" value="${board.bno }">
-									</div>
 									<div class="col-sm-6 mb-3 mb-sm-0">
 										<input type="text" class="form-control form-control-user"
-											 name="bwriter" readonly="readonly" value="작성자: ${board.bwriter }">
+											id="exampleFirstName" name="bwriter" placeholder="작성자">
+									</div>
+									<div class="col-sm-6">
+										<input type="text" class="form-control form-control-user"
+											id="exampleLastName" name="bpassword" placeholder="비밀번호">
 									</div>
 								</div>
 								<div class="form-group">
@@ -41,11 +41,19 @@
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">글내용</h6>
 										</div>
-										<textarea rows="8" class="card-body form-control" name="bcontent">${board.bcontent }</textarea>
+										<textarea rows="8" class="card-body form-control" name="bcontent"></textarea>
 									</div>
 								</div>
-								<button  class="btn btn-success" >수정하기</button>
-								<button type="button" class="btn btn-info" onclick="location.href='boardList'">글목록</button>
+								<div class="form-group">
+									<div class="card shadow mb-4">
+										<div class="card-header py-3">
+											<h6 class="m-0 font-weight-bold text-primary">파일업로드</h6>
+										</div>
+										<input type="file" class="card-body form-control" name="bfile" >
+									</div>
+								</div>
+								<input type="submit" class="btn btn-primary btn-user btn-block" value="글등록">
+								<hr>
 								
 							</form>
 						</div>

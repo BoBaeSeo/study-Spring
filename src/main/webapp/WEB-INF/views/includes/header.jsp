@@ -134,7 +134,7 @@
                         <h6 class="collapse-header">게시판 메뉴</h6>
                         <a class="collapse-item" href="boardList">글목록보기</a>
                         <a class="collapse-item" href="boardWriteForm">글등록하기</a>
-                        <a class="collapse-item" href="forgot-password.html">비밀번호 찾기</a>
+                        <a class="collapse-item" href="boardWriteFileForm">글등록(파일)</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>

@@ -2,6 +2,8 @@ package com.MemberBoard1.dto;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -14,4 +16,7 @@ public class BoardDTO {
 	private String bcontent;
 	private Date bdate;
 	private int bhit;
+	
+	private MultipartFile bfile;
+	private String bfilename;
 }
