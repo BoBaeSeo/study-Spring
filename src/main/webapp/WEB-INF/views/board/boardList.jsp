@@ -40,7 +40,7 @@
 						<c:forEach var="list" items="${boardList }">
 							<tr>
 								<td>${list.bno }</td>
-								<td><a href="boardView?bno=${list.bno }">${list.btitle }</a></td>
+								<td><a href="boardView?bno=${list.bno }">${list.btitle }</a> [${list.commentCnt }]</td>
 								<td>${list.bwriter }</td>
 								<td>${list.bdate }</td>
 								<td>${list.bhit }</td>

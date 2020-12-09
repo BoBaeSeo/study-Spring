@@ -37,6 +37,17 @@
  		DELETE FROM BOARD WHERE BNO = #{bno}
  	</delete>
  	
+ 	<insert id="boardWriteFile" parameterType="com.MemberBoard1.dto.BoardDTO">
+ 		INSERT INTO BOARD VALUES(#{bno}, #{bwriter}, #{bpassword}, #{btitle}, #{bcontent}, SYSDATE, 0, #{bfilename})
+ 	</insert>
+ 	
+ 	<select id="getBfilename" resultType="String">
+ 		SELECT BFILENAME FROM BOARD WHERE BNO=#{bno}
+ 	</select>
+ 	
+ 	<select id="getCommentCnt" resultType="int">
+ 		SELECT COUNT(CNO) FROM COMMENTS WHERE CBNO=#{bno}
+ 	</select>
  	<!-- search를 하는 3번째 방법 -->
 <!--  	<select id="boardSearch" resultMap="board">
  		SELECT * FROM BOARD 
@@ -59,6 +70,7 @@
  		<result property="bcontent" column="BCONTENT" />
  		<result property="bdate" column="BDATE" />
  		<result property="bhit" column="BHIT" />
+ 		<result property="bfilename" column="BFILENAME" />
  	</resultMap>
  	
 

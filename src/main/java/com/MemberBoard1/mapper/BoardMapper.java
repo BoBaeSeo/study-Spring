@@ -30,6 +30,12 @@ public interface BoardMapper {
 
 	public int boardDelete(int bno);
 
+	public int boardWriteFile(BoardDTO dto);
+
+	public String getBfilename(int bno);
+
+	public int getCommentCnt(int bno);
+
 
 	/* public ArrayList<BoardDTO> boardSearch(Map<String, String> map); */
 

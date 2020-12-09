@@ -1,5 +1,6 @@
 package com.MemberBoard1.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,10 +82,10 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/boardWriteFile")
-	public ModelAndView boardWriteFile(BoardDTO dto){
+	public ModelAndView boardWriteFile(BoardDTO dto, RedirectAttributes ra) throws IllegalStateException, IOException{
 		System.out.println("/boardWriteFile");
 		System.out.println(dto);
-		mav = boardService.boardWriteFile(dto);
+		mav = boardService.boardWriteFile(dto, ra);
 		return mav;
 		
 	}

@@ -19,4 +19,6 @@ public class BoardDTO {
 	
 	private MultipartFile bfile;
 	private String bfilename;
+	
+	private int commentCnt;
 }

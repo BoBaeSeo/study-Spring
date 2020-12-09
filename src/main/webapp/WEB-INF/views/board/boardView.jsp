@@ -15,8 +15,8 @@
 			<div class="card-body p-0">
 				<!-- Nested Row within Card Body -->
 				<div class="row">
-					<div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-					<div class="col-lg-7">
+					<!-- <div class="col-lg-5 d-none d-lg-block bg-register-image"></div> -->
+					<div class="col-lg-7" style="margin:auto">
 						<div class="p-5">
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">글 상세보기 페이지</h1>
@@ -42,6 +42,9 @@
 										<div class="card-header py-3">
 											<h6 class="m-0 font-weight-bold text-primary">글내용</h6>
 										</div>
+										<c:if test="${board.bfilename != null }">
+										<img src="/resources/fileUpload/${board.bfilename }" style="max-width: 100%">
+										</c:if>
 										<textarea rows="8" class="card-body form-control"
 											name="bcontent" readonly="readonly">${board.bcontent }</textarea>
 									</div>
@@ -101,6 +104,13 @@
 			var cwriter = $("#cwriter").val();
 			var ccontent = $("#ccontent").val();
 			var cbno = '${board.bno}';
+			if(cwriter === ""){
+				alert("작성자를 입력해주세요")
+				$("#cwriter").focus()
+			} else if (ccontent === "") {
+				alert("글 내용을 입력해주세요")
+				$("#ccontent").focus()
+			} else {
 			console.log(cwriter + "::" + ccontent + "::" + cbno)
 			$.ajax({
 				type : "post",
@@ -121,6 +131,7 @@
 					alert("실패");
 				}
 			})
+			}
 		})
 	})
 	
