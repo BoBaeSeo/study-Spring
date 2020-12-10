@@ -28,6 +28,14 @@ public class BoardController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/boardListPaging")
+	public ModelAndView boardListPaging(@RequestParam(value="page", defaultValue="1") int page) {
+		System.out.println("/boardListPaging");
+		System.out.println("page::" + page);
+		mav = boardService.boardListPaging(page);
+		return mav;
+	}
+	
 	@RequestMapping(value="/boardWriteForm")
 	public String boardWriteForm() {
 		System.out.println("/boardWriteForm");

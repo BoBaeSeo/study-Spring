@@ -155,6 +155,11 @@ public class BoardService {
 		mav.setViewName("redirect:/boardList");
 		return mav;
 	}
+
+	public ModelAndView boardListPaging(int page) {
+		mav = new ModelAndView();
+		return null;
+	}
 	
 
 

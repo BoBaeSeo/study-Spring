@@ -49,7 +49,7 @@
 					</tbody>
 				</table>
 			</div>
-			<a href="boardWriteForm" class="btn btn-primary btn-icon-split"> <span
+			<a href="boardWriteFileForm" class="btn btn-primary btn-icon-split"> <span
 				class="icon text-white-50"> <i class="fas fa-flag"></i>
 			</span> <span class="text">글쓰기</span>
 			</a> 
