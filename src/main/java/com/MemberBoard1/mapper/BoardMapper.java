@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 import com.MemberBoard1.dto.BoardDTO;
 import com.MemberBoard1.dto.CommentsDTO;
+import com.MemberBoard1.dto.PageDTO;
 
 public interface BoardMapper {
 
@@ -34,7 +35,9 @@ public interface BoardMapper {
 
 	public String getBfilename(int bno);
 
-	public int getCommentCnt(int bno);
+	public ArrayList<BoardDTO> boardListPage(PageDTO pageDTO);
+
+	public int getBoardListCnt();
 
 
 	/* public ArrayList<BoardDTO> boardSearch(Map<String, String> map); */

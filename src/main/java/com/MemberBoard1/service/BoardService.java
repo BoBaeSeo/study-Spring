@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.MemberBoard1.dto.BoardDTO;
 import com.MemberBoard1.dto.CommentsDTO;
+import com.MemberBoard1.dto.PageDTO;
 import com.MemberBoard1.mapper.BoardMapper;
 import com.MemberBoard1.mapper.CommentMapper;
 
@@ -34,7 +35,7 @@ public class BoardService {
 		System.out.println(boardList);
 		System.out.println("boardList2::"+boardMapper.boardList2());
 		for(int i=0; i<boardList.size(); i++	) {
-			boardList.get(i).setCommentCnt(boardMapper.getCommentCnt(boardList.get(i).getBno()));			
+			boardList.get(i).setCommentCnt(commentMapper.commentSelect(boardList.get(i).getBno()));			
 		}
 		mav.addObject("boardList", boardList);
 		mav.setViewName("board/boardList");
@@ -152,13 +153,47 @@ public class BoardService {
 		int writeResult = boardMapper.boardWriteFile(dto);
 		System.out.println(writeResult);
 		ra.addFlashAttribute("modalBno", bno);
-		mav.setViewName("redirect:/boardList");
+		mav.setViewName("redirect:/boardListPaging");
 		return mav;
 	}
 
 	public ModelAndView boardListPaging(int page) {
 		mav = new ModelAndView();
-		return null;
+		
+		int pageLimit = 5; // 한 페이지에 보여줄 글의 갯수
+		int pageNumLimit = 3; // 한 페이지에 보여줄 페이지 번호
+		
+		int startRow = (page - 1) * pageLimit + 1;
+		int endRow = page * pageLimit;
+		
+		PageDTO pageDTO = new PageDTO();
+		pageDTO.setStartrow(startRow);
+		pageDTO.setEndrow(endRow);
+		
+		ArrayList<BoardDTO> boardList = boardMapper.boardListPage(pageDTO);
+		
+		int boardListCnt = boardMapper.getBoardListCnt();
+		int maxPage = (int)(Math.ceil((double)boardListCnt/pageLimit));
+		int startPage = ((int)(Math.ceil((double)page/pageNumLimit)) -1) * pageNumLimit + 1;
+		int endPage = startPage + pageNumLimit -1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		pageDTO.setPage(page);
+		pageDTO.setStartpage(startPage);
+		pageDTO.setEndpage(endPage);
+		pageDTO.setMaxpage(maxPage);
+
+		for(int i = 0; i < boardList.size(); i++) {
+			int cbno = boardList.get(i).getBno();
+			int commentCnt = commentMapper.commentSelect(cbno);
+			boardList.get(i).setCommentCnt(commentCnt);
+		}
+		
+		mav.addObject("boardList", boardList);
+		mav.addObject("pageDTO", pageDTO);
+		mav.setViewName("board/boardListPaging");
+		return mav;
 	}
 	
 

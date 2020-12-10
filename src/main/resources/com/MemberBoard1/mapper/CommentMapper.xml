@@ -2,35 +2,49 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="com.MemberBoard1.mapper.CommentMapper">
 	<select id="getMaxCno" resultType="int">
-		SELECT NVL(MAX(CNO), 0) FROM COMMENTS
+		SELECT NVL(MAX(CNO), 0) FROM
+		COMMENTS
 	</select>
 
-	<insert id="commentWrite" parameterType="com.MemberBoard1.dto.CommentsDTO">
-		INSERT INTO COMMENTS VALUES(#{cno}, #{cbno}, #{cwriter}, #{ccontent}, SYSDATE)
+	<insert id="commentWrite"
+		parameterType="com.MemberBoard1.dto.CommentsDTO">
+		INSERT INTO COMMENTS VALUES(#{cno}, #{cbno}, #{cwriter},
+		#{ccontent}, SYSDATE)
 	</insert>
 	<select id="getCommentList" resultMap="comment">
-		SELECT * FROM COMMENTS WHERE CBNO=#{cbno} ORDER BY CNO DESC
+		SELECT * FROM COMMENTS
+		WHERE CBNO=#{cbno} ORDER BY CNO DESC
 	</select>
-	
+
 	<delete id="commentDelete" parameterType="int">
-		DELETE FROM COMMENTS WHERE CNO=#{cno}
+		DELETE FROM COMMENTS
+		WHERE CNO=#{cno}
 	</delete>
-	
+
 	<delete id="allCommentDelete" parameterType="int">
-		DELETE FROM COMMENTS WHERE CBNO=#{bno}
+		DELETE FROM COMMENTS
+		WHERE CBNO=#{bno}
 	</delete>
-	
-	<update id="commentModify" parameterType="com.MemberBoard1.dto.CommentsDTO">
-		UPDATE COMMENTS SET CCONTENT=#{ccontent} WHERE CNO=#{cno}
+
+	<update id="commentModify"
+		parameterType="com.MemberBoard1.dto.CommentsDTO">
+		UPDATE COMMENTS SET CCONTENT=#{ccontent} WHERE
+		CNO=#{cno}
 	</update>
- 	<resultMap type="com.MemberBoard1.dto.CommentsDTO" id="comment">
- 		<result property="cno" column="CNO" />
- 		<result property="cbno" column="CBNO" />
- 		<result property="cwriter" column="CWRITER" />
- 		<result property="ccontent" column="CCONTENT" />
- 		<result property="cdate" column="CDATE" />
- 	</resultMap>
+
+	<select id="commentSelect" resultType="int">
+		SELECT COUNT(CNO) FROM COMMENTS WHERE CBNO=#{bno}
+	</select>
+
+	<resultMap type="com.MemberBoard1.dto.CommentsDTO"
+		id="comment">
+		<result property="cno" column="CNO" />
+		<result property="cbno" column="CBNO" />
+		<result property="cwriter" column="CWRITER" />
+		<result property="ccontent" column="CCONTENT" />
+		<result property="cdate" column="CDATE" />
+	</resultMap>
 </mapper>

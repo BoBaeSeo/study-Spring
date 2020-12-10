@@ -54,7 +54,7 @@
 								<button type="button" class="btn btn-danger"
 									onclick="location.href='boardDelete?bno=${board.bno}'">글삭제</button>	
 								<button type="button" class="btn btn-info"
-									onclick="location.href='boardList'">글목록</button>
+									onclick="location.href='boardListPaging'">글목록</button>
 
 							</form>
 							<br>

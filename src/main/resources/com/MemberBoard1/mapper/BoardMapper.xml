@@ -45,9 +45,6 @@
  		SELECT BFILENAME FROM BOARD WHERE BNO=#{bno}
  	</select>
  	
- 	<select id="getCommentCnt" resultType="int">
- 		SELECT COUNT(CNO) FROM COMMENTS WHERE CBNO=#{bno}
- 	</select>
  	<!-- search를 하는 3번째 방법 -->
 <!--  	<select id="boardSearch" resultMap="board">
  		SELECT * FROM BOARD 
@@ -61,6 +58,16 @@
  			</where>
  			
  	</select> -->
+ 	
+ 	<select id="boardListPage" resultMap="board" parameterType="com.MemberBoard1.dto.PageDTO">
+ 		SELECT * 
+ 		FROM (SELECT ROWNUM RN, BOARD.* FROM BOARD ORDER BY BNO) 
+ 		WHERE RN BETWEEN ${startrow} AND ${endrow}
+ 	</select>
+ 	
+ 	<select id="getBoardListCnt" resultType="int">
+ 		SELECT COUNT(*) FROM BOARD
+ 	</select>
  	
  	<resultMap type="com.MemberBoard1.dto.BoardDTO" id="board">
  		<result property="bno" column="BNO" />

@@ -9,7 +9,8 @@
 	<h1 class="h3 mb-2 text-gray-800">home.jsp</h1>
 	<p class="mb-4"></p>
 
-	<a href="boardList">boardList</a>
+	<a href="boardList">boardList</a><br>
+	<a href="boardListPaging">boardListPaging</a>
 </div>
 <!-- /.container-fluid -->
 </div>
