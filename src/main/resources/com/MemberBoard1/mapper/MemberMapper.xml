@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.MemberBoard1.mapper.MemberMapper">
+	<select id="checkMid" parameterType="String" resultType="String">
+		SELECT MID FROM MEMBERS WHERE MID=#{checkId}
+	</select>
+
+	<insert id="memberJoin" parameterType="com.MemberBoard1.dto.MemberDTO">
+		INSERT INTO MEMBERS VALUES (#{mid}, #{mpassword}, #{mname}, #{mbirth},
+		#{maddress}, #{memail}, #{mphone})
+	</insert>
+
+	<resultMap type="com.MemberBoard1.dto.MemberDTO" id="member">
+		<result property="mid" column="MID"/>
+		<result property="mpassword" column="MPASSWORD"/>
+		<result property="mname" column="MNAME"/>
+		<result property="mbirth" column="MBIRTH"/>
+		<result property="maddress" column="MADDRESS"/>
+		<result property="memail" column="MEMAIL"/>
+		<result property="mphone" column="MPHONE"/>
+	</resultMap>
+</mapper>
+
