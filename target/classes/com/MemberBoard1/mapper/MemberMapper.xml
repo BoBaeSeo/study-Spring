@@ -13,6 +13,22 @@
 		#{maddress}, #{memail}, #{mphone})
 	</insert>
 
+	<select id="memberLogin" parameterType="com.MemberBoard1.dto.MemberDTO" resultType="String">
+		SELECT MID FROM MEMBERS WHERE MID=#{mid} AND MPASSWORD=#{mpassword}
+	</select>
+	
+	<select id="memberView" resultMap="member" parameterType="String">
+		SELECT * FROM MEMBERS WHERE MID=#{mid}
+	</select>
+	
+	<update id="modifyMphoneProcess" parameterType="com.MemberBoard1.dto.MemberDTO">
+		UPDATE MEMBERS SET MPHONE=#{mphone} WHERE MID=#{mid}
+	</update>
+	
+	<update id="modifyMemailProcess" parameterType="com.MemberBoard1.dto.MemberDTO">
+		UPDATE MEMBERS SET MEMAIL=#{memail} WHERE MID=#{mid}
+	</update>
+	
 	<resultMap type="com.MemberBoard1.dto.MemberDTO" id="member">
 		<result property="mid" column="MID"/>
 		<result property="mpassword" column="MPASSWORD"/>
@@ -22,5 +38,6 @@
 		<result property="memail" column="MEMAIL"/>
 		<result property="mphone" column="MPHONE"/>
 	</resultMap>
+	
 </mapper>
 

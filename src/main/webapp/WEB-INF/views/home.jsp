@@ -8,7 +8,9 @@
 	<!-- Page Heading -->
 	<h1 class="h3 mb-2 text-gray-800">home.jsp</h1>
 	<p class="mb-4"></p>
-
+	<c:if test="${sessionScope.loginId != null }">
+	<h3>${sessionScope.loginId }님 환영합니다.</h3>
+	</c:if>
 	<a href="boardList">boardList</a><br>
 	<a href="boardListPaging">boardListPaging</a>
 </div>

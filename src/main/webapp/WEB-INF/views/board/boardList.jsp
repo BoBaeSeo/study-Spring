@@ -86,9 +86,9 @@
 	$(document).ready(function() {
 		var modalBno = '${modalBno}';
 		var deleteCheck = '${deleteCheck}';
-		CheckModal(modalBno);
+		checkModal(modalBno);
 		
-		function CheckModal(modalBno) {
+		function checkModal(modalBno) {
 			if (modalBno === '') {
 				return;
 			}

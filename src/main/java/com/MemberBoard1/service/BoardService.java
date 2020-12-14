@@ -23,9 +23,9 @@ import com.MemberBoard1.mapper.CommentMapper;
 public class BoardService {
 
 	@Autowired
-	BoardMapper boardMapper;
+	private BoardMapper boardMapper;
 	@Autowired
-	CommentMapper commentMapper;
+	private CommentMapper commentMapper;
 	
 	private ModelAndView mav;
 	

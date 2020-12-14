@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -79,12 +80,13 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>메뉴</span>
+                    <span>회원메뉴</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Members</h6>
-                        <a class="collapse-item" href="buttons.html">로그인</a>
+                        <a class="collapse-item" href="memberLoginForm">로그인</a>
+                        <a class="collapse-item" href="memberLogout">로그아웃</a>
                         <a class="collapse-item" href="memberJoinForm">회원가입</a>
                     </div>
                 </div>
@@ -95,13 +97,15 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>메뉴2</span>
+                    <span>회원관리메뉴</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
+                        <h6 class="collapse-header">Member management</h6>
+                        <c:if test="${sessionScope.loginId != null }">
+                        <a class="collapse-item" href="memberView">회원수정하기</a>
+                        </c:if>
                         <a class="collapse-item" href="utilities-border.html">Borders</a>
                         <a class="collapse-item" href="utilities-animation.html">Animations</a>
                         <a class="collapse-item" href="utilities-other.html">Other</a>
@@ -347,6 +351,17 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
+                        <c:choose>
+                        <c:when test="${sessionScope.loginId == null }">
+                        <!-- 비로그인 상태 -->
+                        <a class="nav-link dropdown-toggle" href="memberLoginForm">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">로그인</span>
+                                <img class="img-profile rounded-circle"
+                                    src="resources/img/undraw_profile.svg">
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                        <!-- 로그인 상태 -->
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
@@ -374,6 +389,8 @@
                                     Logout
                                 </a>
                             </div>
+                            </c:otherwise>
+                                </c:choose>
                         </li>
 
                     </ul>

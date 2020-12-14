@@ -8,4 +8,12 @@ public interface MemberMapper {
 
 	int memberJoin(MemberDTO memberDTO);
 
+	String memberLogin(MemberDTO memberDTO);
+
+	MemberDTO memberView(String mid);
+
+	int modifyMphoneProcess(MemberDTO dto);
+
+	int modifyMemailProcess(MemberDTO dto);
+
 }
