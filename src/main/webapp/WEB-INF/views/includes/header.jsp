@@ -85,9 +85,16 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Members</h6>
+                        <c:choose>
+                        <c:when test="${sessionScope.loginId == null }">
                         <a class="collapse-item" href="memberLoginForm">로그인</a>
-                        <a class="collapse-item" href="memberLogout">로그아웃</a>
                         <a class="collapse-item" href="memberJoinForm">회원가입</a>
+                        </c:when>
+                        <c:otherwise>
+                        <a class="collapse-item" href="memberLogout">로그아웃</a>
+                        <a class="collapse-item" href="memberView">회원정보</a>
+                        </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </li>
@@ -103,9 +110,6 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Member management</h6>
-                        <c:if test="${sessionScope.loginId != null }">
-                        <a class="collapse-item" href="memberView">회원수정하기</a>
-                        </c:if>
                         <a class="collapse-item" href="utilities-border.html">Borders</a>
                         <a class="collapse-item" href="utilities-animation.html">Animations</a>
                         <a class="collapse-item" href="utilities-other.html">Other</a>
@@ -356,24 +360,23 @@
                         <!-- 비로그인 상태 -->
                         <a class="nav-link dropdown-toggle" href="memberLoginForm">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">로그인</span>
-                                <img class="img-profile rounded-circle"
-                                    src="resources/img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="resources/img/undraw_profile.svg">
                             </a>
                         </c:when>
                         <c:otherwise>
                         <!-- 로그인 상태 -->
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="resources/img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${sessionScope.loginId }</span>
+                                <img class="img-profile rounded-circle" src="resources/img/${sessionScope.loginId }.jpg" 
+                                onerror="this.src = 'resources/img/undraw_profile.svg'">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="memberView">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    내정보
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm ppppppppppppppppppppppppppppppppppppppp[]fa-fw mr-2 text-gray-400"></i>

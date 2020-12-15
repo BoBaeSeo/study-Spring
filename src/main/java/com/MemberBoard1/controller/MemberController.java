@@ -1,5 +1,7 @@
 package com.MemberBoard1.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,16 +69,23 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/modifyMphoneProcess")
-	public @ResponseBody String modifyMphoneProcess(String newMphone) {
+	public @ResponseBody String modifyMphoneProcess(MemberDTO dto) {
 		System.out.println("/modifyMphoneProcess");
-		String mphone = memberService.modifyMphoneProcess(newMphone);
-		return mphone;
+		String result = memberService.modifyMphoneProcess(dto);
+		return result;
 	}
 	
 	@RequestMapping(value="/modifyMemailProcess")
-	public @ResponseBody String modifyMemailProcess(String newMemail) {
+	public @ResponseBody String modifyMemailProcess(MemberDTO dto) {
 		System.out.println("/modifyMemailProcess");
-		String Memail = memberService.modifyMemailProcess(newMemail);
-		return Memail;
+		String result = memberService.modifyMemailProcess(dto);
+		return result;
+	}
+	
+	@RequestMapping(value="/updateBprofile")
+	public ModelAndView updateBprofile(MemberDTO dto) throws IllegalStateException, IOException {
+		System.out.println("/updateBprofile");
+		mav = memberService.updateBprofile(dto);
+		return mav;
 	}
 }

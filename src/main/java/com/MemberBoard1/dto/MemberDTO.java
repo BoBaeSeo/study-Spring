@@ -2,6 +2,8 @@ package com.MemberBoard1.dto;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -20,4 +22,8 @@ public class MemberDTO {
 	private String maddr;			// 주소
 	private String maddrefer;		// 참고항목
 	private String mdetailAddress;	// 상세주소
+
+	private String mprofilename;
+	private MultipartFile mprofile;
 }
+

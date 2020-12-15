@@ -1,9 +1,14 @@
 package com.MemberBoard1.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -62,24 +67,37 @@ public class MemberService {
 		return mav;
 	}
 
-	public String modifyMphoneProcess(String newMphone) {
-		String mid = (String) session.getAttribute("loginId");
-		MemberDTO dto = new MemberDTO();
-		dto.setMid(mid);
-		dto.setMphone(newMphone);
+	public String modifyMphoneProcess(MemberDTO dto) {
 		int updateResult = memberMapper.modifyMphoneProcess(dto);
 		System.out.println(updateResult);
-		return newMphone;
+		String result = "NO";
+		if(updateResult > 0) {
+			result ="OK";
+		} 
+		return result;
 	}
 
-	public String modifyMemailProcess(String newMemail) {
-		String mid = (String) session.getAttribute("loginId");
-		MemberDTO dto = new MemberDTO();
-		dto.setMid(mid);
-		dto.setMemail(newMemail);
+	public String modifyMemailProcess(MemberDTO dto) {
 		int updateResult = memberMapper.modifyMemailProcess(dto);
 		System.out.println(updateResult);
-		return newMemail;
+		String result = "NO";
+		if(updateResult > 0) {
+			result ="OK";
+		} 
+		return result;
+	}
+
+	public ModelAndView updateBprofile(MemberDTO dto) throws IllegalStateException, IOException {
+		mav = new ModelAndView();
+		MultipartFile mprofile = dto.getMprofile();
+		String mprofileName = dto.getMid()+".jpg";
+		String savePath = "C:\\Users\\seeth\\Documents\\workspace-spring-tool-suite-4-4.8.1.RELEASE\\MemberBoard1\\src\\main\\webapp\\resources\\img\\";
+		mprofile.transferTo(new File(savePath+mprofileName));
+		dto.setMprofilename(mprofileName);
+		int updateResult = memberMapper.updateBprofile(dto);
+		System.out.println(updateResult);
+		mav.setViewName("redirect:/memberView");
+		return mav;
 	}
 
 }

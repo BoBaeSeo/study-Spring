@@ -9,7 +9,7 @@
 	</select>
 
 	<insert id="memberJoin" parameterType="com.MemberBoard1.dto.MemberDTO">
-		INSERT INTO MEMBERS VALUES (#{mid}, #{mpassword}, #{mname}, #{mbirth},
+		INSERT INTO MEMBERS (MID, MPASSWORD, MNAME, MBIRTH, MADDRESS, MEMAIL, MPHONE) VALUES (#{mid}, #{mpassword}, #{mname}, #{mbirth},
 		#{maddress}, #{memail}, #{mphone})
 	</insert>
 
@@ -29,6 +29,10 @@
 		UPDATE MEMBERS SET MEMAIL=#{memail} WHERE MID=#{mid}
 	</update>
 	
+	<update id="updateBprofile" parameterType="com.MemberBoard1.dto.MemberDTO">
+		UPDATE MEMBERS SET MPROFILENAME=#{mprofilename} WHERE MID=#{mid}
+	</update>
+	
 	<resultMap type="com.MemberBoard1.dto.MemberDTO" id="member">
 		<result property="mid" column="MID"/>
 		<result property="mpassword" column="MPASSWORD"/>
@@ -37,6 +41,7 @@
 		<result property="maddress" column="MADDRESS"/>
 		<result property="memail" column="MEMAIL"/>
 		<result property="mphone" column="MPHONE"/>
+		<result property="mprofilename" column="MPROFILENAME"/>
 	</resultMap>
 	
 </mapper>

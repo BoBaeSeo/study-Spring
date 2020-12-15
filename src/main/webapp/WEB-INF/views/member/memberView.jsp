@@ -8,12 +8,9 @@
 	<p class="mb-4"></p>
 
 	<div class="container">
-
 		<div class="card o-hidden border-0 shadow-lg my-5">
 				<!-- Nested Row within Card Body -->
-				<div class="row">
-					<div class="col-lg-7" style="margin: 0 auto">
-						<div class="p-5">
+						<div class="p-5" style="margin: 0 auto">
 						<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">memberView.jsp</h1>
 							</div>
@@ -54,7 +51,8 @@
 											onclick="modifyMphone()" >수정</button>
 											 <input id="inputMphone" name="mphone" readonly="readonly"
 												type="text" class="form-control" value="${memberDTO.mphone }">
-											<button class="btn btn-primary btn-sm" id="modifyMphoneOkBtn" style="display: none;" onclick="modifyMphone()">확인</button>
+											<button class="btn btn-primary btn-sm" id="mphoneOkBtn" style="display: none;" onclick="modifyMphone(true)">확인</button>  
+											<button class="btn btn-primary btn-sm" id="mphoneCancelBtn" style="display: none;" onclick="modifyMphone(false)">취소</button>
 										</div>
 									</div>
 									<!-- Form Row -->
@@ -64,7 +62,8 @@
 											<label class="small mb-1" for="inputMemailId">이메일</label> <button class="btn btn-primary btn-sm" id="memailModifyBtn" onclick="modifyMemail()">수정</button>
 											<input id="inputMemail" name="email" readonly="readonly"
 												type="text" class="form-control" value="${memberDTO.memail }">
-											<button class="btn btn-primary btn-sm" id="modifyMemailOkBtn" style="display: none;" onclick="modifyMemail()">확인</button>
+											<button class="btn btn-primary btn-sm" id="memailOkBtn" style="display: none;" onclick="modifyMemail(true)">확인</button>
+											<button class="btn btn-primary btn-sm" id="memailCancelBtn" style="display: none;" onclick="modifyMemail(false)">취소</button>
 										</div>
 										<!-- Form Group (생년월일) -->
 										<div class="form-group col-md-6">
@@ -73,80 +72,115 @@
 												class="form-control" value="${memberDTO.mbirth }">
 										</div>
 									</div>
-									<!-- Form Row -->
 									<!-- Form Group (주소) -->
 									<div class="form-group">
 										<label class="small mb-1" for="sample6_detailAddress">주소</label>
 										<input type="text" class="form-control" name="maddress"
 											id="maddress" value="${memberDTO.maddress }" readonly="readonly">
 									</div>
-									<input type="submit" class="btn btn-primary" value="회원가입">
+									<input type="button" class="btn btn-primary" onclick="toggleProfile()" value="프로필">
+									<form action="updateBprofile" method="post" style="display:none" enctype="multipart/form-data" id="profile">
+										<c:if test="${memberDTO.mprofilename != null }">
+											<img class="img-profile rounded-circle" src="resources/img/${memberDTO.mprofilename }" width="200px">
+										</c:if>
+										<input type="hidden" name="mid" value="${memberDTO.mid }">
+										<input type="file" name="mprofile"><br><br>
+										<input type="submit" class="btn btn-primary" value="저장">
+									</form>
 								</div>
 							</div>
 						</div>
 					</div>
-					</div>
-		</div>
-	</div>
+				</div>
+			</div>
 
 	<!-- /.container-fluid -->
 	<!-- End of Main Content -->
 
 	<script type="text/javascript">
-		function modifyMphone(){
-			if($("#inputMphone").attr('readonly')){
+
+		function modifyMphone(check) {
+			if ($("#inputMphone").attr('readonly')) {
 				$("#inputMphone").attr('readonly', false);
-				$("#modifyMphoneOkBtn").show();
+				$("#mphoneOkBtn").show();
+				$("#mphoneCancelBtn").show();
 				$("#mphoneModifyBtn").hide();
 			} else {
-				var newMphone = $("#inputMphone").val();
-				console.log(newMphone);
-				$.ajax({
-					type : "post",
-					url : "modifyMphoneProcess",
-					data : {
-							"newMphone" : newMphone
-					},
-					dataType : "text",
-					success : function(result){
-						$("#inputMphone").val(result);
-						$("#inputMphone").attr('readonly', true);
-						$("#modifyMphoneOkBtn").hide();
-						$("#mphoneModifyBtn").show();
+				if (check) {
+					var newMphone = $("#inputMphone").val();
+					console.log(newMphone);
+					$.ajax({
+						type : "post",
+						url : "modifyMphoneProcess",
+						data : {
+							"mid" : "${memberDTO.mid}",
+							"mphone" : newMphone
 						},
-					error : function(){
-						console.log("전화번호 수정 연결 실패")
-					}
-				});
+						dataType : "text",
+						success : function(result) {
+							if(result == "OK"){
+								alert("전화번호 변경 성공")
+							} else {
+								alert("전화번호 변경 실패")
+								$("#inputMphone").val("${memberDTO.mphone}");
+							}
+						},
+						error : function() {
+							console.log("전화번호 수정 연결 실패")
+						}
+					});
+				} else {
+					$("#inputMphone").val("${memberDTO.mphone}");
+				}
+				$("#inputMphone").attr('readonly', true);
+				$("#mphoneOkBtn").hide();
+				$("#mphoneCancelBtn").hide();
+				$("#mphoneModifyBtn").show();
 			}
 		}
-		
-		function modifyMemail(){
-			if($("#inputMemail").attr('readonly')){
+
+		function modifyMemail(check) {
+			if ($("#inputMemail").attr('readonly')) {
 				$("#inputMemail").attr('readonly', false);
-				$("#modifyMemailOkBtn").show();
+				$("#memailOkBtn").show();
+				$("#memailCancelBtn").show();
 				$("#memailModifyBtn").hide();
 			} else {
-				var newMemail = $("#inputMemail").val();
-				console.log(newMemail);
-				$.ajax({
-					type : "post",
-					url : "modifyMemailProcess",
-					data : {
-							"newMemail" : newMemail
-					},
-					dataType : "text",
-					success : function(result){
-						$("#inputMemail").val(result);
-						$("#inputMemail").attr('readonly', true);
-						$("#modifyMemailOkBtn").hide();
-						$("#memailModifyBtn").show();
+				if (check) {
+					var newMemail = $("#inputMemail").val();
+					console.log(newMemail);
+					$.ajax({
+						type : "post",
+						url : "modifyMemailProcess",
+						data : {
+							"mid" : "${memberDTO.mid}",
+							"memail" : newMemail
 						},
-					error : function(){
-						console.log("이메일 수정 연결 실패")
-					}
-				});
+						dataType : "text",
+						success : function(result) {
+							if(result == "OK"){
+								alert("이메일 변경 성공")
+							} else {
+								alert("이메일 변경 실패")
+								$("#inputMemail").val("${memberDTO.memail}");
+							}
+						},
+						error : function() {
+							console.log("이메일 수정 연결 실패")
+						}
+					});
+				} else {
+					$("#inputMemail").val("${memberDTO.memail}");
+				}
+				$("#inputMemail").attr('readonly', true);
+				$("#memailOkBtn").hide();
+				$("#memailCancelBtn").hide();
+				$("#memailModifyBtn").show();
 			}
+		}
+
+		function toggleProfile(){
+			$("#profile").toggle();
 		}
 	</script>
 
