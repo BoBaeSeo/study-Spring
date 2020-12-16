@@ -2,7 +2,7 @@ package com.MemberBoard1.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.MemberBoard1.dto.MemberDTO;
+import com.MemberBoard1.dto.PageDTO;
+import com.MemberBoard1.mapper.BoardMapper;
+import com.MemberBoard1.mapper.CommentMapper;
 import com.MemberBoard1.mapper.MemberMapper;
 
 @Service
@@ -20,6 +23,12 @@ public class MemberService {
 
 	@Autowired
 	private MemberMapper memberMapper;
+	
+	@Autowired
+	private BoardMapper boardMapper;
+	
+	@Autowired
+	private CommentMapper commentMapper;
 	
 	@Autowired
 	private HttpSession session;
@@ -58,9 +67,8 @@ public class MemberService {
 		return mav;
 	}
 
-	public ModelAndView memberView() {
+	public ModelAndView memberView(String mid) {
 		mav = new ModelAndView();
-		String mid = (String) session.getAttribute("loginId");
 		MemberDTO memberDTO = memberMapper.memberView(mid);
 		mav.addObject("memberDTO", memberDTO);
 		mav.setViewName("member/memberView");
@@ -96,7 +104,63 @@ public class MemberService {
 		dto.setMprofilename(mprofileName);
 		int updateResult = memberMapper.updateBprofile(dto);
 		System.out.println(updateResult);
-		mav.setViewName("redirect:/memberView");
+		mav.setViewName("redirect:/memberView?mid="+dto.getMid());
+		return mav;
+	}
+
+	public String getProfile(String mid) {
+		mav = new ModelAndView();
+		String profileName = memberMapper.getProfile(mid);
+		return profileName;
+	}
+
+	public ModelAndView memberList(int page) {
+		mav = new ModelAndView();
+		int pageLimit = 5;
+		int pageNumLimit = 3;
+		
+		int startRow = (page - 1) * pageLimit + 1;
+		int endRow = page * pageLimit;
+		
+		PageDTO pageDTO = new PageDTO();
+		pageDTO.setStartrow(startRow);
+		pageDTO.setEndrow(endRow);
+		
+		ArrayList<MemberDTO> memberList = memberMapper.memberListPage(pageDTO);
+		
+		int memberListCnt = memberMapper.getMemberListCnt();
+		int maxPage = (int)(Math.ceil((double)memberListCnt/pageLimit));
+		int startPage = ((int)(Math.ceil((double)page/pageNumLimit)) -1) * pageNumLimit + 1;
+		int endPage = startPage + pageNumLimit -1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+		pageDTO.setPage(page);
+		pageDTO.setStartpage(startPage);
+		pageDTO.setEndpage(endPage);
+		pageDTO.setMaxpage(maxPage);
+
+		mav.addObject("memberList", memberList);
+		mav.addObject("pageDTO", pageDTO);
+		mav.setViewName("member/memberList");
+		return mav;
+	}
+
+	public ModelAndView memberDelete(String mid, RedirectAttributes ra) {
+		mav = new ModelAndView();
+		int deleteBoardResult = boardMapper.memberBoardDelete(mid);
+		System.out.println("deleteBoardResult:" + deleteBoardResult);
+		int deleteCommentResult = commentMapper.memberCommentDelete(mid);
+		System.out.println("deleteCommetResult:" + deleteCommentResult);
+		String savePath = "C:\\Users\\seeth\\Documents\\workspace-spring-tool-suite-4-4.8.1.RELEASE\\MemberBoard1\\src\\main\\webapp\\resources\\img\\";
+		String mfileName = memberMapper.getProfile(mid);
+		File file = new File(savePath+mfileName);
+		file.delete();
+		int deleteResult = memberMapper.memberDelete(mid);
+		System.out.println("deleteResult:" + deleteResult);
+		ra.addFlashAttribute("mid", mid+"가 삭제되었습니다.");
+		session.invalidate();
+		mav.setViewName("redirect:/");
 		return mav;
 	}
 

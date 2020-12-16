@@ -20,4 +20,6 @@ public interface CommentMapper {
 	
 	int commentSelect(int bno);
 
+	int memberCommentDelete(String mid);
+
 }

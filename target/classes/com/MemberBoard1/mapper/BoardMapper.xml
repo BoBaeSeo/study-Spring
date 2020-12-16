@@ -69,6 +69,10 @@
  		SELECT COUNT(*) FROM BOARD
  	</select>
  	
+ 	<delete id="memberBoardDelete" parameterType="String">
+ 		DELETE FROM BOARD WHERE BWRITER=#{mid}
+ 	</delete>
+ 	
  	<resultMap type="com.MemberBoard1.dto.BoardDTO" id="board">
  		<result property="bno" column="BNO" />
  		<result property="bwriter" column="BWRITER" />

@@ -16,7 +16,7 @@
 							</div>
 							<div class="card mb-4">
 									<div class="card-header">
-										${sessionScope.loginId }님의 회원정보
+										${memberDTO.mid }님의 회원정보
 									</div>
 									<!-- Form Row -->
 									<div class="card-body">
@@ -47,23 +47,32 @@
 										</div>
 										<!-- Form Group (전화번호) -->
 										<div class="form-group col-md-6">
-											<label class="small mb-1" for="inputMphone">전화번호</label> <button id="mphoneModifyBtn" class="btn btn-primary btn-sm" 
-											onclick="modifyMphone()" >수정</button>
+											<label class="small mb-1" for="inputMphone">전화번호</label> 
+											<c:if test="${sessionScope.loginId == memberDTO.mid }">
+											<button id="mphoneModifyBtn" class="btn btn-primary btn-sm" onclick="modifyMphone()" >수정</button>
+											</c:if>
 											 <input id="inputMphone" name="mphone" readonly="readonly"
 												type="text" class="form-control" value="${memberDTO.mphone }">
+											<c:if test="${sessionScope.loginId == memberDTO.mid }">
 											<button class="btn btn-primary btn-sm" id="mphoneOkBtn" style="display: none;" onclick="modifyMphone(true)">확인</button>  
 											<button class="btn btn-primary btn-sm" id="mphoneCancelBtn" style="display: none;" onclick="modifyMphone(false)">취소</button>
+											</c:if>
 										</div>
 									</div>
 									<!-- Form Row -->
 									<div class="form-row">
 										<!-- Form Group (이메일) -->
 										<div class="form-group col-md-6">
-											<label class="small mb-1" for="inputMemailId">이메일</label> <button class="btn btn-primary btn-sm" id="memailModifyBtn" onclick="modifyMemail()">수정</button>
+											<label class="small mb-1" for="inputMemailId">이메일</label> 
+											<c:if test="${sessionScope.loginId == memberDTO.mid }">
+											<button class="btn btn-primary btn-sm" id="memailModifyBtn" onclick="modifyMemail()">수정</button>
+											</c:if>
 											<input id="inputMemail" name="email" readonly="readonly"
-												type="text" class="form-control" value="${memberDTO.memail }">
+												type="email" class="form-control" value="${memberDTO.memail }">
+											<c:if test="${sessionScope.loginId == memberDTO.mid }">
 											<button class="btn btn-primary btn-sm" id="memailOkBtn" style="display: none;" onclick="modifyMemail(true)">확인</button>
 											<button class="btn btn-primary btn-sm" id="memailCancelBtn" style="display: none;" onclick="modifyMemail(false)">취소</button>
+											</c:if>
 										</div>
 										<!-- Form Group (생년월일) -->
 										<div class="form-group col-md-6">
@@ -80,12 +89,13 @@
 									</div>
 									<input type="button" class="btn btn-primary" onclick="toggleProfile()" value="프로필">
 									<form action="updateBprofile" method="post" style="display:none" enctype="multipart/form-data" id="profile">
-										<c:if test="${memberDTO.mprofilename != null }">
-											<img class="img-profile rounded-circle" src="resources/img/${memberDTO.mprofilename }" width="200px">
-										</c:if>
+										<img class="img-profile rounded-circle" src="resources/img/${memberDTO.mprofilename }" width="200px"
+										onerror="this.src = 'resources/img/undraw_profile.svg'">
 										<input type="hidden" name="mid" value="${memberDTO.mid }">
+										<c:if test="${sessionScope.loginId == memberDTO.mid }">
 										<input type="file" name="mprofile"><br><br>
 										<input type="submit" class="btn btn-primary" value="저장">
+										</c:if>
 									</form>
 								</div>
 							</div>

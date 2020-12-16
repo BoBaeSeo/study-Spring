@@ -76,9 +76,8 @@
 							<div class="form-group">
 								<div class="card shadow mb-4">
 									<div class="card-header py-3">
-										<input type="text" id="cwriter"
-											class="form-control form-control-user" name="cwriter"
-											placeholder="댓글작성자">
+										<input type="text" id="cwriter" class="form-control form-control-user" 
+										name="cwriter" readonly="readonly" value="${sessionScope.loginId }">
 									</div>
 									<textarea rows="2" class="card-body form-control" id="ccontent"
 										name="ccontent"></textarea>
@@ -147,8 +146,10 @@
 			output += "<div class='card shadow mb-4'>";
 			output += "<div class='card-header py-3'>";
 			output += "<input type='text' class='form-control form-control-user col-sm-4 delComment' readonly='readonly' value='"+cwriter+"'> ";
+			if(cwriter == '${sessionScope.loginId }'){
 			output += "<button class='btn btn-danger btn-sm' onclick='delComment("+cno+")'>삭제</button> ";
 			output += '<button id="'+cno+'" class="btn btn-info btn-sm" onclick="commentModify('+cno+' , '+ "'"+ ccontent + "'"+ ')">수정</button>';
+			}
 			output += "</div>";
 			output += "<textarea rows='2' class='card-body form-control' readonly='readonly' name='"+ccontent+"'>"+ccontent+"</textarea>";
 			output += "</div>";

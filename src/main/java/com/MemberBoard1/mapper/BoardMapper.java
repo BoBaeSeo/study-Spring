@@ -39,6 +39,10 @@ public interface BoardMapper {
 
 	public int getBoardListCnt();
 
+	public int getbnoMid(String mid);
+
+	public int memberBoardDelete(String mid);
+
 
 	/* public ArrayList<BoardDTO> boardSearch(Map<String, String> map); */
 

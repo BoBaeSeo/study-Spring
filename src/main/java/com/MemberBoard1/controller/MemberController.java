@@ -63,8 +63,8 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/memberView")
-	public ModelAndView memberView() {
-		mav = memberService.memberView();
+	public ModelAndView memberView(String mid) {
+		mav = memberService.memberView(mid);
 		return mav;
 	}
 	
@@ -86,6 +86,27 @@ public class MemberController {
 	public ModelAndView updateBprofile(MemberDTO dto) throws IllegalStateException, IOException {
 		System.out.println("/updateBprofile");
 		mav = memberService.updateBprofile(dto);
+		return mav;
+	}
+	
+	@RequestMapping(value="/getProfile", produces="application/text; charset=UTF-8")
+	public @ResponseBody String getProfile(String mid) {
+		System.out.println("/getProfile");
+		String profileName = memberService.getProfile(mid);
+		return profileName;
+	}
+	
+	@RequestMapping(value="/memberList")
+	public ModelAndView memberList(@RequestParam(value="page", defaultValue="1") int page) {
+		System.out.println("/memberList");
+		mav = memberService.memberList(page);
+		return mav;
+	}
+	
+	@RequestMapping(value="/memberDelete")
+	public ModelAndView memberDelete(String mid, RedirectAttributes ra) {
+		System.out.println("/memberDelete");
+		mav = memberService.memberDelete(mid, ra);
 		return mav;
 	}
 }

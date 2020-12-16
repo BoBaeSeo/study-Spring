@@ -39,6 +39,9 @@
 		SELECT COUNT(CNO) FROM COMMENTS WHERE CBNO=#{bno}
 	</select>
 
+	<delete id="memberCommentDelete">
+		DELETE FROM COMMENTS WHERE CWRITER=#{mid}
+	</delete>
 	<resultMap type="com.MemberBoard1.dto.CommentsDTO"
 		id="comment">
 		<result property="cno" column="CNO" />

@@ -33,6 +33,24 @@
 		UPDATE MEMBERS SET MPROFILENAME=#{mprofilename} WHERE MID=#{mid}
 	</update>
 	
+	<select id="getProfile" resultType="String" parameterType="String">
+		SELECT MPROFILENAME FROM MEMBERS WHERE MID=#{mid}
+	</select>
+	
+	<select id="memberListPage" resultMap="member">
+		SELECT * 
+		FROM (SELECT ROWNUM RN, MEMBERS.* FROM MEMBERS)
+		WHERE RN BETWEEN ${startrow} AND ${endrow}
+	</select>
+	
+	<select id="getMemberListCnt" resultType="int">
+		SELECT COUNT(*) FROM MEMBERS
+	</select>
+	
+	<delete id="memberDelete" parameterType="String">
+		DELETE FROM MEMBERS WHERE MID=#{mid}
+	</delete>
+	
 	<resultMap type="com.MemberBoard1.dto.MemberDTO" id="member">
 		<result property="mid" column="MID"/>
 		<result property="mpassword" column="MPASSWORD"/>
