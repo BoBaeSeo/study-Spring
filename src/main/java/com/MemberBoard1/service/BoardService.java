@@ -139,11 +139,10 @@ public class BoardService {
 		UUID uuid = UUID.randomUUID();
 		System.out.println(uuid.toString());
 		MultipartFile bfile = dto.getBfile();
-		String fileName = uuid.toString().substring(1, 8)+"_"+bfile.getOriginalFilename();
-		System.out.println("fileNaem::"+fileName);
-		
+		String fileName = "";
 		String savePath = "C:\\Users\\seeth\\Documents\\workspace-spring-tool-suite-4-4.8.1.RELEASE\\MemberBoard1\\src\\main\\webapp\\resources\\fileUpload\\";
 		if(!bfile.isEmpty()) {
+			fileName = uuid.toString().substring(1, 8)+"_"+bfile.getOriginalFilename();
 			bfile.transferTo(new File(savePath+fileName));
 		}
 		dto.setBfilename(fileName);

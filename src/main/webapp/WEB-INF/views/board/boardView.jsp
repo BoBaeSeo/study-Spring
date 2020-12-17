@@ -49,10 +49,12 @@
 											name="bcontent" readonly="readonly">${board.bcontent }</textarea>
 									</div>
 								</div>
+								<c:if test="${sessionScope.loginId == board.bwriter }">
 								<button type="button" class="btn btn-success"
 									onclick="location.href='boardModify?bno=${board.bno}'">글수정</button>
 								<button type="button" class="btn btn-danger"
-									onclick="location.href='boardDelete?bno=${board.bno}'">글삭제</button>	
+									onclick="location.href='boardDelete?bno=${board.bno}'">글삭제</button>
+								</c:if>	
 								<button type="button" class="btn btn-info"
 									onclick="location.href='boardListPaging'">글목록</button>
 
@@ -71,20 +73,26 @@
 							</div>
 								</c:forEach> --%>
 							</div>
-							
-							
-							<div class="form-group">
-								<div class="card shadow mb-4">
-									<div class="card-header py-3">
-										<input type="text" id="cwriter" class="form-control form-control-user" 
-										name="cwriter" readonly="readonly" value="${sessionScope.loginId }">
+							<c:choose>
+								<c:when test="${sessionScope.loginId != null }">
+									<div class="form-group">
+										<div class="card shadow mb-4">
+											<div class="card-header py-3">
+											<div class="form-group row">
+												<img class='btn-circle' style="margin:0 10px;" src='resources/img/${sessionScope.loginId }.jpg' onerror='this.src="resources/img/undraw_profile.svg"'> <input 
+												type="text" id="cwriter" class="form-control form-control-user col-sm-6" name="cwriter" readonly="readonly" value="${sessionScope.loginId }">
+												</div>
+											</div>
+											<textarea rows="2" class="card-body form-control"
+												id="ccontent" name="ccontent"></textarea>
+											<button type="button" class="btn btn-info" id="commentsWriteBtn">댓글달기</button>
+										</div>
 									</div>
-									<textarea rows="2" class="card-body form-control" id="ccontent"
-										name="ccontent"></textarea>
-									<button type="button" class="btn btn-info"
-										id="commentsWriteBtn">댓글달기</button>
-								</div>
-							</div>
+								</c:when>
+								<c:otherwise>
+									<a href="memberLoginForm" class="btn btn-primary" >로그인</a>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>
@@ -145,6 +153,7 @@
 			output += "<div class='form-group'>";
 			output += "<div class='card shadow mb-4'>";
 			output += "<div class='card-header py-3'>";
+			output += "<img class='btn-circle' id='profileImg' src='resources/img/"+cwriter+".jpg' onerror='this.src = "+'"resources/img/undraw_profile.svg"'+"'> "
 			output += "<input type='text' class='form-control form-control-user col-sm-4 delComment' readonly='readonly' value='"+cwriter+"'> ";
 			if(cwriter == '${sessionScope.loginId }'){
 			output += "<button class='btn btn-danger btn-sm' onclick='delComment("+cno+")'>삭제</button> ";
@@ -167,6 +176,7 @@
 					"cbno" : '${board.bno}'
 			},
 			dataType : "json",
+			/* async : false, */
 			success : function(result){
 				console.log(result);
 				commentList(result);
@@ -225,6 +235,10 @@
 			}
 			})
 		}
+	}
+
+	function getProfile(){
+
 	}
 </script>
 

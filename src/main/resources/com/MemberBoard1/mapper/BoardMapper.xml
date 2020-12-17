@@ -73,6 +73,10 @@
  		DELETE FROM BOARD WHERE BWRITER=#{mid}
  	</delete>
  	
+ 	<select id="memberBoardList" resultMap="board">
+		SELECT * FROM BOARD WHERE BWRITER=#{mid}
+	</select>
+	
  	<resultMap type="com.MemberBoard1.dto.BoardDTO" id="board">
  		<result property="bno" column="BNO" />
  		<result property="bwriter" column="BWRITER" />

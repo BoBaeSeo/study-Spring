@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.MemberBoard1.dto.BoardDTO;
 import com.MemberBoard1.dto.MemberDTO;
 import com.MemberBoard1.dto.PageDTO;
 import com.MemberBoard1.mapper.BoardMapper;
@@ -98,9 +99,14 @@ public class MemberService {
 	public ModelAndView updateBprofile(MemberDTO dto) throws IllegalStateException, IOException {
 		mav = new ModelAndView();
 		MultipartFile mprofile = dto.getMprofile();
-		String mprofileName = dto.getMid()+".jpg";
 		String savePath = "C:\\Users\\seeth\\Documents\\workspace-spring-tool-suite-4-4.8.1.RELEASE\\MemberBoard1\\src\\main\\webapp\\resources\\img\\";
-		mprofile.transferTo(new File(savePath+mprofileName));
+		String mprofileName = dto.getMid()+".jpg";
+		if(!mprofile.isEmpty()) {
+			mprofile.transferTo(new File(savePath+mprofileName));
+		} else {
+			File file = new File(savePath+mprofileName);
+			file.delete();
+		}
 		dto.setMprofilename(mprofileName);
 		int updateResult = memberMapper.updateBprofile(dto);
 		System.out.println(updateResult);
@@ -158,10 +164,15 @@ public class MemberService {
 		file.delete();
 		int deleteResult = memberMapper.memberDelete(mid);
 		System.out.println("deleteResult:" + deleteResult);
-		ra.addFlashAttribute("mid", mid+"가 삭제되었습니다.");
+		ra.addFlashAttribute("delMember", mid+" 회원이 삭제되었습니다.");
 		session.invalidate();
 		mav.setViewName("redirect:/");
 		return mav;
+	}
+
+	public ArrayList<BoardDTO> memberBoardList(String mid) {
+		ArrayList<BoardDTO> boardList = boardMapper.memberBoardList(mid);
+		return boardList;
 	}
 
 }

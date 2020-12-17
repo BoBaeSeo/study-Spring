@@ -43,6 +43,7 @@ public interface BoardMapper {
 
 	public int memberBoardDelete(String mid);
 
+	ArrayList<BoardDTO> memberBoardList(String mid);
 
 	/* public ArrayList<BoardDTO> boardSearch(Map<String, String> map); */
 

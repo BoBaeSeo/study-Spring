@@ -2,6 +2,7 @@ package com.MemberBoard1.mapper;
 
 import java.util.ArrayList;
 
+import com.MemberBoard1.dto.BoardDTO;
 import com.MemberBoard1.dto.MemberDTO;
 import com.MemberBoard1.dto.PageDTO;
 

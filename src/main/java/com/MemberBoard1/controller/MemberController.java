@@ -1,6 +1,7 @@
 package com.MemberBoard1.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.MemberBoard1.dto.BoardDTO;
 import com.MemberBoard1.dto.MemberDTO;
 import com.MemberBoard1.service.MemberService;
 
@@ -108,5 +110,12 @@ public class MemberController {
 		System.out.println("/memberDelete");
 		mav = memberService.memberDelete(mid, ra);
 		return mav;
+	}
+	
+	@RequestMapping(value="/memberBoardList")
+	public @ResponseBody ArrayList<BoardDTO> memberBoardList(String mid){
+		System.out.println("/memberBoardList");
+		ArrayList<BoardDTO> boardList = memberService.memberBoardList(mid);
+		return boardList;
 	}
 }

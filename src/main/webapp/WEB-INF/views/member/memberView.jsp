@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+response.setHeader("cache-control","no-store"); 
+response.setHeader("Pragma","no-cache"); 
+response.setDateHeader("Expires",0); 
+%>
+
 <%@ include file="../includes/header.jsp"%>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -87,6 +93,7 @@
 										<input type="text" class="form-control" name="maddress"
 											id="maddress" value="${memberDTO.maddress }" readonly="readonly">
 									</div>
+									<!-- profile (프로필) -->
 									<input type="button" class="btn btn-primary" onclick="toggleProfile()" value="프로필">
 									<form action="updateBprofile" method="post" style="display:none" enctype="multipart/form-data" id="profile">
 										<img class="img-profile rounded-circle" src="resources/img/${memberDTO.mprofilename }" width="200px"
@@ -96,7 +103,11 @@
 										<input type="file" name="mprofile"><br><br>
 										<input type="submit" class="btn btn-primary" value="저장">
 										</c:if>
-									</form>
+									</form><hr>
+									<!-- 내가 쓴 글 -->
+									<input type="button" class="btn btn-light" onclick="toggleWriteBoard()" value="작성글"> 
+									<div id="boardArea" style="display:none;"></div>
+										
 								</div>
 							</div>
 						</div>
@@ -108,7 +119,6 @@
 	<!-- End of Main Content -->
 
 	<script type="text/javascript">
-
 		function modifyMphone(check) {
 			if ($("#inputMphone").attr('readonly')) {
 				$("#inputMphone").attr('readonly', false);
@@ -192,6 +202,44 @@
 		function toggleProfile(){
 			$("#profile").toggle();
 		}
+
+		function toggleWriteBoard(){
+			if($("#boardArea").css("display") == "none"){
+				$("#boardArea").toggle();
+				$.ajax({
+					type: "post",
+					url: "memberBoardList",
+					data: {
+							"mid" : "${sessionScope.loginId}"
+						},
+					dataType: "json",
+					success: function(result){
+						pringMemberBoard(result);
+						},
+					error: function(){
+						console.log('작성한 글 연결 실패')
+						}
+					})
+			} else {
+				$("#boardArea").css("display", "none")
+			}
+		}
+
+
+		function pringMemberBoard(result){
+			var output = '';
+			for(var i in result){
+				var bno = result[i].bno;
+				var btitle = result[i].btitle;
+				var bdate = result[i].bdate;
+				var bhit = result[i].bhit
+				output += "<div class='card mb-4 border-left-warning' id='writeBoard' style='margin:10px'>"
+				output += "<div class='card-header'><a href='boardView?bno="+bno+"'>글 제목: "+btitle+"</a>"
+				output += "  조회수: "+bhit+"</div></div> "
+				}
+			$("#boardArea").html(output);
+
+			}
 	</script>
 
 	<%@ include file="../includes/footer.jsp"%>
