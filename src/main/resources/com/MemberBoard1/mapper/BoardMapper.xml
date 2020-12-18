@@ -77,6 +77,10 @@
 		SELECT * FROM BOARD WHERE BWRITER=#{mid}
 	</select>
 	
+	<select id="boardListMember" resultMap="board">
+		SELECT * FROM BOARD WHERE BWRITER=#{bwriter}
+	</select>
+	
  	<resultMap type="com.MemberBoard1.dto.BoardDTO" id="board">
  		<result property="bno" column="BNO" />
  		<result property="bwriter" column="BWRITER" />

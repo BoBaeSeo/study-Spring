@@ -41,7 +41,15 @@
 							<tr>
 								<td>${list.bno }</td>
 								<td><a href="boardView?bno=${list.bno }">${list.btitle }</a> [${list.commentCnt }]</td>
-								<td>${list.bwriter }</td>
+								<td><div class="dropdown no-arrow mb-4">
+                                        <a class="dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            ${list.bwriter }
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+                                            <a class="dropdown-item" href="memberView?mid=${list.bwriter }">회원정보</a>
+                                            <a class="dropdown-item" href="#">게시글 보기</a>
+                                        </div>
+                                    </div></td>
 								<td>${list.bdate }</td>
 								<td>${list.bhit }</td>
 							</tr>
@@ -83,27 +91,8 @@
 </div>
 
 <script>
-	$(document).ready(function() {
-		var modalBno = '${modalBno}';
-		var deleteCheck = '${deleteCheck}';
-		checkModal(modalBno);
-		
-		function checkModal(modalBno) {
-			if (modalBno === '') {
-				return;
-			}
-			if (parseInt(modalBno) > 0) {
-				if(deleteCheck == 'del'){
-					$("#exampleModalLabel").text("글 삭제 확인")
-					$(".modal-body").text("게시글 " + parseInt(modalBno) + " 번이 삭제되었습니다.")
-				}else{
-					$("#exampleModalLabel").text("글 등록 확인")
-					$(".modal-body").text("게시글 " + parseInt(modalBno) + " 번이 등록되었습니다.")
-				}
-			} 
-			
-			$("#bwriteModal").modal("show");
-		}
-	});
+	var modalBno = '${modalBno}';
+	var deleteCheck = '${deleteCheck}';
+	modalProcess(modalBno, deleteCheck)
 </script>
 <%@ include file="../includes/footer.jsp"%>

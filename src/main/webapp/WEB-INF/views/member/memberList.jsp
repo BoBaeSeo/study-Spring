@@ -85,11 +85,6 @@
 				<div class="col-sm-12 col-md-5">
 					<div class="dataTables_info" id="dataTable_info" role="status"
 						aria-live="polite">
-						<a href="boardWriteFileForm"
-							class="btn btn-primary btn-icon-split"> <span
-							class="icon text-white-50"> <i class="fas fa-flag"></i>
-						</span> <span class="text">글쓰기</span>
-						</a>
 					</div>
 				</div>
 

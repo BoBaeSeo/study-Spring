@@ -45,6 +45,8 @@ public interface BoardMapper {
 
 	ArrayList<BoardDTO> memberBoardList(String mid);
 
+	public ArrayList<BoardDTO> boardListMember(String bwriter);
+
 	/* public ArrayList<BoardDTO> boardSearch(Map<String, String> map); */
 
 }

@@ -95,6 +95,12 @@ public class BoardController {
 		System.out.println(dto);
 		mav = boardService.boardWriteFile(dto, ra);
 		return mav;
-		
+	}
+	
+	@RequestMapping(value="/boardListMember")
+	public ModelAndView boardListMember(String bwriter) {
+		System.out.println("/boardListMember");
+		mav = boardService.boardListMember(bwriter);
+		return mav;
 	}
 }

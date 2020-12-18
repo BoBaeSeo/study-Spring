@@ -130,7 +130,7 @@ public class BoardService {
 		System.out.println("deleteResult:" + result);
 		ra.addFlashAttribute("modalBno", bno);
 		ra.addFlashAttribute("deleteCheck", "del");
-		mav.setViewName("redirect:/boardList");
+		mav.setViewName("redirect:/boardListPaging");
 		return mav;
 	}
 
@@ -191,6 +191,17 @@ public class BoardService {
 		
 		mav.addObject("boardList", boardList);
 		mav.addObject("pageDTO", pageDTO);
+		mav.setViewName("board/boardListPaging");
+		return mav;
+	}
+
+	public ModelAndView boardListMember(String bwriter) {
+		mav = new ModelAndView();
+		ArrayList<BoardDTO> boardList = boardMapper.boardListMember(bwriter);
+		for(int i=0; i<boardList.size(); i++) {
+			boardList.get(i).setCommentCnt(commentMapper.commentSelect(boardList.get(i).getBno()));
+		}
+		mav.addObject("boardList", boardList);
 		mav.setViewName("board/boardListPaging");
 		return mav;
 	}

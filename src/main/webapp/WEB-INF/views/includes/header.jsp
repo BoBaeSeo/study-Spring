@@ -3,9 +3,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,6 +12,7 @@
 
     <title>SB Admin 2 - Tables</title>
 	<script src="/resources/memberJs/postCode.js"></script>
+	<script src="/resources/memberJs/board.js"></script>
     <!-- Custom fonts for this template -->
         <script src="resources/vendor/jquery/jquery.min.js"></script>
     <link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -39,9 +38,15 @@
 			display: inline-block;
 		}
 	</style>
+	<script type="text/javascript">
+			var path = '${pageContext.request.contextPath}';
+			var loginId = '${sessionScope.loginId}'
+			writeLoginCheck(path, loginId)
+			getMemberProfileImg(loginId)
+	</script>
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="getMemberProfileImg('${sessionScope.loginId}')">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -138,10 +143,8 @@
                         <h6 class="collapse-header">게시판 메뉴</h6>
                         <a class="collapse-item" href="boardList">글목록보기</a>
                         <a class="collapse-item" href="boardListPaging">글목록(페이징)</a>
-                        <c:if test="${sessionScope.loginId != null }">
-                        <a class="collapse-item" href="boardWriteForm">글등록하기</a>
-                        <a class="collapse-item" href="boardWriteFileForm">글등록(파일)</a>
-                        </c:if>
+                        <a class="collapse-item" id="boardWriteForm">글등록하기</a>
+                        <a class="collapse-item" id="boardWriteFileForm">글등록(파일)</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>
@@ -402,32 +405,4 @@
                     </ul>
 
                 </nav>
-        <script>
-			$(document).ready(function(){
-    		var loginId = '${sessionScope.loginId}'
-
-            if(loginId == ''){
-				console.log("비로그인 상태");
-				return;
-            }
-         	$.ajax({
-				type : "post",
-				url : "getProfile",
-				data : {
-					"mid" : loginId
-				},
-				dataType : "text",
-				success : function(profileImg){
-					console.log("profileImg:"+ profileImg)
-					/* 에이젝스가 실행 된 뒤 profile src 속성 바꾸기 */
-					$("#profileImg").attr("src", "resources/img/"+profileImg)
-				},
-				error : function(){
-					alert("연결실패");
-				}
-             })   
-
-		})
-				
-        </script>
                 <!-- End of Topbar -->
