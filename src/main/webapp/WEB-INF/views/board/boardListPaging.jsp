@@ -48,6 +48,7 @@
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
                                             <a class="dropdown-item" href="memberView?mid=${list.bwriter }">회원정보</a>
                                             <a class="dropdown-item" href="boardListMember?bwriter=${list.bwriter }">게시글 보기</a>
+                                            <a class="dropdown-item" onclick="showMessageModal('${list.bwriter}')">쪽지 보내기</a>
                                         </div>
                                     </div></td>
 								<td>${list.bdate }</td>
@@ -147,10 +148,60 @@
 	</div>
 </div>
 
+<!--MESSAGE Modal-->
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">메세지 보내기</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">보내는 사람 : ${sessionScope.loginId }<br>받는사람 : <span id="receiveId"></span>님에게 보내는 메세지<br>
+			<textarea rows="6" cols="40" id="msg_content" placeholder="메세지 내용입력"></textarea>			
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" type="button" onclick="sendMsg()">보내기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 	var modalBno = '${modalBno}';
 	var deleteCheck = '${deleteCheck}';
 	modalProcess(modalBno, deleteCheck);
-
+	function showMessageModal(msg_receiveId){
+	var receiveId = msg_receiveId;
+	$("#receiveId").html(receiveId);
+	$("#messageModal").modal("show");
+	}
+	function sendMsg(msg_receiveid){
+	var msg_sendid = '${sessionScope.loginId}';
+	var msg_receiveid = $("#receiveId").text();
+	var msg_content = $("#msg_content").val();
+	$.ajax({
+		type:"post",
+		url:"sendMsg",
+		data:{
+			"msg_sendid" : msg_sendid,
+			"msg_receiveid" : msg_receiveid,
+			"msg_content" : msg_content
+		},
+		dataType: "text",
+		success: function(result){
+			console.log(result);
+			alert(result);
+		},
+		error: function(){
+			console.log("메세지 전송 연결 실패")
+		}
+	});
+	$("#msg_content").val("")
+	$("#messageModal").modal("hide");
+	}	
 </script>
 <%@ include file="../includes/footer.jsp"%>

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.MemberBoard1.dto.BoardDTO;
 import com.MemberBoard1.dto.MemberDTO;
+import com.MemberBoard1.dto.MessageDTO;
 import com.MemberBoard1.service.MemberService;
 
 @Controller
@@ -117,5 +118,12 @@ public class MemberController {
 		System.out.println("/memberBoardList");
 		ArrayList<BoardDTO> boardList = memberService.memberBoardList(mid);
 		return boardList;
+	}
+	
+	@RequestMapping(value="/sendMsg", produces="application/text; charset=UTF-8")
+	public @ResponseBody String sendMsg(MessageDTO dto) {
+		System.out.println("/sendMsg");
+		String sendResult = memberService.sendMsg(dto);
+		return sendResult;
 	}
 }

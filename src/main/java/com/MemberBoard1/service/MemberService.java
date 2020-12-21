@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.MemberBoard1.dto.BoardDTO;
 import com.MemberBoard1.dto.MemberDTO;
+import com.MemberBoard1.dto.MessageDTO;
 import com.MemberBoard1.dto.PageDTO;
 import com.MemberBoard1.mapper.BoardMapper;
 import com.MemberBoard1.mapper.CommentMapper;
@@ -173,6 +174,15 @@ public class MemberService {
 	public ArrayList<BoardDTO> memberBoardList(String mid) {
 		ArrayList<BoardDTO> boardList = boardMapper.memberBoardList(mid);
 		return boardList;
+	}
+
+	public String sendMsg(MessageDTO dto) {
+		int insertResult = memberMapper.sendMsg(dto);
+		String sendResult = "메세지 전송에 실패하였습니다.";
+		if(insertResult>0) {
+			sendResult = "메세지가 전송되었습니다.";
+		}
+		return sendResult;
 	}
 
 }
