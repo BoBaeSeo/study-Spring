@@ -120,10 +120,4 @@ public class MemberController {
 		return boardList;
 	}
 	
-	@RequestMapping(value="/sendMsg", produces="application/text; charset=UTF-8")
-	public @ResponseBody String sendMsg(MessageDTO dto) {
-		System.out.println("/sendMsg");
-		String sendResult = memberService.sendMsg(dto);
-		return sendResult;
-	}
 }

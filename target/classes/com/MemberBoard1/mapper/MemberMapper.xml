@@ -50,11 +50,7 @@
 	<delete id="memberDelete" parameterType="String">
 		DELETE FROM MEMBERS WHERE MID=#{mid}
 	</delete>
-	
-	<insert id="sendMsg" parameterType="com.MemberBoard1.dto.MessageDTO">
-		INSERT INTO MEMBERSMSG(MSG_SENDID, MSG_RECEIVEID, MSG_CONTENT, MSG_DATE, MSG_CHECK) VALUES(#{msg_sendid}, #{msg_receiveid}, #{msg_content}, SYSDATE, 0)
-	</insert>
-	
+
 	<resultMap type="com.MemberBoard1.dto.MemberDTO" id="member">
 		<result property="mid" column="MID"/>
 		<result property="mpassword" column="MPASSWORD"/>

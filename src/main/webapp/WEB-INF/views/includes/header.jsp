@@ -239,7 +239,7 @@
                                 </form>
                             </div>
                         </li>
-
+					
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
@@ -290,14 +290,14 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
-
+					<c:if test="${sessionScope.loginId != null}">
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
+                                <span class="badge badge-danger badge-counter" id="notReadMSG"></span>
                             </a>
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -305,7 +305,8 @@
                                 <h6 class="dropdown-header">
                                     Message Center
                                 </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                <div id="msgArea" style="overflow: auto; height:300px;"></div>
+                                <!-- <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
                                         <img class="rounded-circle" src="resources/img/undraw_profile_1.svg"
                                             alt="">
@@ -352,11 +353,11 @@
                                             told me that people say this to all dogs, even if they aren't good...</div>
                                         <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                     </div>
-                                </a>
+                                </a> -->
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                             </div>
                         </li>
-
+					</c:if>
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
@@ -405,4 +406,97 @@
                     </ul>
 
                 </nav>
+                
+<div class="modal fade" id="messageDetailModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">메세지 상세보기</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body" id="msgDetailArea"></div>
+			<div class="modal-footer">
+				<a class="btn btn-primary" type="button" data-dismiss="modal" href="#" >Close</a>
+			</div>
+		</div>
+	</div>
+</div>
                 <!-- End of Topbar -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var loginId = '${sessionScope.loginId}';
+			$.ajax({
+				type: 'post',
+				url: 'getMsgList',
+				data: {'loginId' : loginId},
+				dataType: 'json',
+				success: function(data){
+					console.log(data)
+					printMsgList(data)
+				},
+				error: function(){
+					console.log('메세지 연결실패');
+				}
+			})
+		})
+		
+		function printMsgList(data){
+			var count = 0;
+			var output = '';
+			for(var i in data){
+				var msg_code = data[i].msg_code;
+				var msg_sendid = data[i].msg_sendid;
+				var msg_content = data[i].msg_content;
+				var msg_date = new Date(data[i].msg_date);
+				var msg_check = data[i].msg_check;
+				var current_time = new Date();
+				var elapse_time = (current_time.getTime() - msg_date.getTime()) / 1000/60;
+				console.log(elapse_time)
+				output += '<a class="dropdown-item d-flex align-items-center" onclick="showMsgDetail('+msg_code+')"> <div class="dropdown-list-image mr-3">';
+				output += "<img class='rounded-circle' src='resources/img/"+msg_sendid+".jpg' onerror='this.src ="+ '"resources/img/undraw_profile.svg"'+"'>";
+				output += '<div class="status-indicator bg-success"></div></div>';
+				if(msg_check == 0){
+					output += '<div class="font-weight-bold">'
+					count++
+				} else {
+					output += '<div>'
+				}
+				output += '<div class="text-truncate">'+msg_content+'</div><div class="small text-gray-500">'+msg_sendid
+				if(elapse_time < 60){
+					output += ' · '+parseInt(elapse_time)+'m </div></div></a>';
+				} else {
+					elapse_time = elapse_time/60
+					output += ' · '+parseInt(elapse_time)+'h </div></div></a>';
+					if(elapse_time >= 24){
+						elapse_time = elapse_time / 24
+						output += ' · '+parseInt(elapse_time)+'d </div></div></a>';
+					}
+				}
+			}
+			$("#notReadMSG").text(count);
+			$("#msgArea").html(output);
+		}
+		function showMsgDetail(msg_code){
+			$.ajax({
+				type: 'post',
+				url: 'showMsgDetail',
+				data: {'msg_code': msg_code},
+				dataType: 'json',
+				success: function(data){
+					var msg_date = new Date(data.msg_date);
+					var output = '보내는 사람: <img class="btn-circle" src="resources/img/'+data.msg_sendid+'.jpg" onerror="this.src = ' + '"resources/img/undraw_profile.svg" > '+data.msg_sendid;
+					output += '<br>전송한 날짜: '+msg_date.getFullYear()+(msg_date.getMonth()+1)+msg_date.getDate()+' <textarea rows="6" cols="40" readonly="readonly">'+data.msg_content+'</textarea>'
+					$("#msgDetailArea").html(output)
+					$("#messageDetailModal").modal("show");
+				},
+				error: function(){
+					console.log('메세지 상세보기 연결 실패')
+				}
+			})
+		}
+
+	</script>

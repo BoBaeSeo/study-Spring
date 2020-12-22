@@ -176,13 +176,4 @@ public class MemberService {
 		return boardList;
 	}
 
-	public String sendMsg(MessageDTO dto) {
-		int insertResult = memberMapper.sendMsg(dto);
-		String sendResult = "메세지 전송에 실패하였습니다.";
-		if(insertResult>0) {
-			sendResult = "메세지가 전송되었습니다.";
-		}
-		return sendResult;
-	}
-
 }
