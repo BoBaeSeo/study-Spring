@@ -420,7 +420,7 @@
 			</div>
 			<div class="modal-body" id="msgDetailArea"></div>
 			<div class="modal-footer">
-				<a class="btn btn-primary" type="button" data-dismiss="modal" href="#" >Close</a>
+				<a class="btn btn-primary" type="button" data-dismiss="modal" onclick="location.reload()" >Close</a>
 			</div>
 		</div>
 	</div>
